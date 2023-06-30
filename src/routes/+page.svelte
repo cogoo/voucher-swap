@@ -1,7 +1,13 @@
 <script>
 	/** @type {import('./$types').PageData} */
 	export let data;
-	console.log('🚀 ~ file: +page.svelte:4 ~ data:', data);
+
+	let selected;
+	let voucherDropdown = '';
+
+	$: price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+		(selected?.salePrice || selected?.basePrice || 0) / 100
+	);
 </script>
 
 <div class="isolate overflow-hidden bg-gray-900">
@@ -66,14 +72,12 @@
 										aria-haspopup="listbox"
 										aria-expanded="true"
 										aria-labelledby="listbox-label"
+										on:click={() => (voucherDropdown = 'open')}
 									>
 										<span class="flex items-center">
-											<img
-												src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-												alt=""
-												class="h-5 w-5 flex-shrink-0 rounded-full"
-											/>
-											<span class="ml-3 block truncate">Tom Cook</span>
+											<span class="ml-3 block truncate"
+												>{selected?.productFullName || 'Choose a voucher'}</span
+											>
 										</span>
 										<span
 											class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2"
@@ -103,71 +107,62 @@
                       From: "opacity-100"
                       To: "opacity-0"
                   -->
-									<ul
-										class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-										tabindex="-1"
-										role="listbox"
-										aria-labelledby="listbox-label"
-										aria-activedescendant="listbox-option-3"
-									>
-										<!--
-                      Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
-              
-                      Highlighted: "bg-indigo-600 text-white", Not Highlighted: "text-gray-900"
-                    -->
-										<li
-											class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
-											id="listbox-option-0"
-											role="option"
+									{#if voucherDropdown === 'open'}
+										<ul
+											class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+											tabindex="-1"
+											role="listbox"
+											aria-labelledby="listbox-label"
+											aria-activedescendant="listbox-option-3"
 										>
-											<div class="flex items-center">
-												<img
-													src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-													alt=""
-													class="h-5 w-5 flex-shrink-0 rounded-full"
-												/>
-												<!-- Selected: "font-semibold", Not Selected: "font-normal" -->
-												<span class="font-normal ml-3 block truncate">Wade Cooper</span>
-											</div>
-
 											<!--
-                        Checkmark, only display for selected option.
-              
-                        Highlighted: "text-white", Not Highlighted: "text-indigo-600"
-                      -->
-											<span
-												class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4"
-											>
-												<svg
-													class="h-5 w-5"
-													viewBox="0 0 20 20"
-													fill="currentColor"
-													aria-hidden="true"
-												>
-													<path
-														fill-rule="evenodd"
-														d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-														clip-rule="evenodd"
-													/>
-												</svg>
-											</span>
-										</li>
+                    Select option, manage highlight styles based on mouseenter/mouseleave and keyboard navigation.
+            
+                    Highlighted: "bg-indigo-600 text-white", Not Highlighted: "text-gray-900"
+                  -->
 
-										<li
-											class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
-											id="listbox-option-0"
-											role="option"
-										>
-											<div class="flex items-center">
-												<img
-													src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-													alt=""
-													class="h-5 w-5 flex-shrink-0 rounded-full"
-												/>
-												<span class="font-normal ml-3 block truncate">Wade Cooper</span>
-											</div>
-										</li>
-									</ul>
+											{#each data.data as item}
+												<li
+													class="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+													role="option"
+													on:click={() => {
+														selected = item;
+														voucherDropdown = 'closed';
+													}}
+												>
+													<div class="flex items-center">
+														<span class="font-normal ml-3 block truncate"
+															>{item.productFullName}</span
+														>
+													</div>
+
+													<!--
+                      Checkmark, only display for selected option.
+            
+                      Highlighted: "text-white", Not Highlighted: "text-indigo-600"
+                    -->
+													{#if selected === item}
+														<span
+															class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4"
+														>
+															<svg
+																class="h-5 w-5"
+																viewBox="0 0 20 20"
+																fill="currentColor"
+																aria-hidden="true"
+															>
+																<path
+																	fill-rule="evenodd"
+																	d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+																	clip-rule="evenodd"
+																/>
+															</svg>
+														</span>
+													{/if}
+												</li>
+											{/each}
+										</ul>
+									{/if}
 								</div>
 							</div>
 
@@ -176,7 +171,7 @@
 							</p>
 
 							<div class="mt-4 flex items-baseline gap-x-2">
-								<span class="text-5xl font-bold tracking-tight text-gray-900">$49</span>
+								<span class="text-5xl font-bold tracking-tight text-gray-900">{price}</span>
 							</div>
 
 							<ul role="list" class="mt-10 space-y-4 text-sm leading-6 text-gray-600">
