@@ -1,3 +1,9 @@
+<script>
+	/** @type {import('./$types').PageData} */
+	export let data;
+	console.log('🚀 ~ file: +page.svelte:4 ~ data:', data);
+</script>
+
 <div class="isolate overflow-hidden bg-gray-900">
 	<div class="mx-auto max-w-7xl px-6 lg:px-8 pt-18 sm:pt-24 text-center">
 		<div class="mx-auto max-w-2xl">
