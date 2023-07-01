@@ -14,5 +14,7 @@ export async function POST({ request, params }) {
 
 	// validate the transfer and update the transaction record
 
+	// confirm payment intent
+
 	return json({ data });
 }
