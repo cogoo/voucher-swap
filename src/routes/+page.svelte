@@ -1,13 +1,28 @@
 <script>
+	import { createTransferRequest, encodeURL, createQR } from './transferRequest.js';
 	/** @type {import('./$types').PageData} */
 	export let data;
 
 	let selected;
 	let voucherDropdown = '';
+	let price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
+	let qrCodeElement;
 
-	$: price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-		(selected?.salePrice || selected?.basePrice || 0) / 100
-	);
+	$: if (selected) {
+		price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
+			(selected?.salePrice || selected?.basePrice || 0) / 100
+		);
+
+		const transferObject = createTransferRequest(
+			(selected?.salePrice || selected?.basePrice) / 100,
+			selected?.productFullName
+		);
+
+		const url = encodeURL(transferObject);
+		const qrCode = createQR(url, 300);
+		qrCodeElement.innerHTML = '';
+		qrCode.append(qrCodeElement);
+	}
 </script>
 
 <div class="isolate overflow-hidden bg-gray-900">
@@ -174,7 +189,9 @@
 								<span class="text-5xl font-bold tracking-tight text-gray-900">{price}</span>
 							</div>
 
-							<ul role="list" class="mt-10 space-y-4 text-sm leading-6 text-gray-600">
+							<div id="qr-code" bind:this={qrCodeElement} />
+
+							<!-- <ul role="list" class="mt-10 space-y-4 text-sm leading-6 text-gray-600">
 								<li class="flex gap-x-3">
 									<svg
 										class="h-6 w-5 flex-none text-indigo-600"
@@ -190,14 +207,14 @@
 									</svg>
 									5 products
 								</li>
-							</ul>
+							</ul> -->
 						</div>
-						<a
+						<!-- <a
 							href="#"
 							aria-describedby="tier-hobby"
 							class="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
 							>Buy Now</a
-						>
+						> -->
 					</div>
 				</div>
 			</div>
