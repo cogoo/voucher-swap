@@ -1,3 +1,5 @@
+import { json } from '@sveltejs/kit';
+
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, params, locals, fetch }) {
 	const paymentData = await request.json();
@@ -20,4 +22,6 @@ export async function POST({ request, params, locals, fetch }) {
 		},
 		body: paymentData
 	});
+
+	return json({ uuid });
 }

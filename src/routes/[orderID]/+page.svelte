@@ -8,11 +8,11 @@
 		<div class="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
 			<div class="flex sm:items-baseline sm:space-x-4">
 				<h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-					Order #{data.payment_intents.voucher_metadata.data.orderId}
+					Order #{data.payment_intents?.voucher_metadata?.data.orderId ?? 'processing'}
 				</h1>
 				<a
 					target="_blank"
-					href={`https://solscan.io/tx/${data.payment_intents.payment_metadata.signature}?cluster=devnet`}
+					href={`https://solscan.io/tx/${data.payment_intents?.payment_metadata.signature}?cluster=devnet`}
 					class="hidden text-sm font-medium text-indigo-600 hover:text-indigo-500 sm:block"
 				>
 					View transaction
@@ -52,11 +52,11 @@
 
 							<div class="mt-6 sm:ml-6 sm:mt-0">
 								<h3 class="text-base font-medium text-gray-900">
-									<a href="#">{data.payment_intents.payment_metadata.items[0].name}</a>
+									<a href="#">{data.payment_intents?.payment_metadata.items[0].name}</a>
 								</h3>
 								<p class="mt-2 text-sm font-medium text-gray-900">
 									{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
-										data.payment_intents.payment_metadata.items[0].price
+										data.payment_intents?.payment_metadata.items[0].price
 									)}
 								</p>
 							</div>
@@ -73,7 +73,7 @@
 								<div>
 									<dt class="font-medium text-gray-900">Voucher details</dt>
 									<dd class="mt-3 space-y-3 text-gray-500">
-										<p>email: {data.payment_intents.payment_metadata.customer_email}</p>
+										<p>email: {data.payment_intents?.payment_metadata.customer_email}</p>
 										<p>voucher code: •••••••••</p>
 										<button type="button" class="font-medium text-indigo-600 hover:text-indigo-500"
 											>View</button
@@ -87,7 +87,7 @@
 					<div class="border-t border-gray-200 px-4 py-6 sm:px-6 lg:p-8">
 						<h4 class="sr-only">Status</h4>
 						<p class="text-sm font-medium text-gray-900">
-							Order {data.payment_intents.voucher_metadata.data.orderStatusText}
+							Order {data.payment_intents?.voucher_metadata?.data.orderStatusText ?? 'processing'}
 						</p>
 						<div class="mt-6" aria-hidden="true">
 							<div class="overflow-hidden rounded-full bg-gray-200">
