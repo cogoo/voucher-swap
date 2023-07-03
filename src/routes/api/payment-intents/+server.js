@@ -7,6 +7,8 @@ import { createPaymentSession } from './paymentSession';
  *
  */
 export async function POST({ request }) {
+	console.log('POST /api/payment-intents');
+
 	const uuid = crypto.randomUUID();
 	const product = await getProductDetails(request);
 	const response = await createPaymentSession(uuid, product);

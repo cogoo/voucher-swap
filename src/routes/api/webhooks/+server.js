@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request, params, locals, fetch }) {
+	console.log('POST /api/webhooks');
 	const paymentData = await request.json();
 
 	const supabase = locals.supabase;
@@ -19,7 +20,7 @@ export async function POST({ request, params, locals, fetch }) {
 	}
 
 	// confirm payment intent /api/payment-intents/{paymentIntentId}/confirm
-	fetch(`/api/payment-intents/${uuid}/confirm`, {
+	await fetch(`/api/payment-intents/${uuid}/confirm`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

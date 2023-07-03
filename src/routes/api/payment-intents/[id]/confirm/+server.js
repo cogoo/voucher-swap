@@ -8,7 +8,9 @@ import { VOUCHER_API_KEY } from '$env/static/private';
  * @description Confirm a payment intent
  *
  */
-export async function POST({ request, fetch, locals }) {
+export async function POST({ request, fetch, locals, params }) {
+	console.log(`POST /api/payment_intents/${params.id}/confirm`);
+
 	const payload = await request.json();
 
 	// issue voucher
