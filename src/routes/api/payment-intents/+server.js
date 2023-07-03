@@ -17,7 +17,7 @@ export async function POST({ request, params }) {
 /**
  * @param {Request} request
  * @description Get the product details from the form
- * @summary Should be replaced with API to voucher service with prouctID as parameter
+ * @summary Should be replaced with API to voucher service with productID as parameter
  */
 async function getProductDetails(request) {
 	const formData = await request.formData();
