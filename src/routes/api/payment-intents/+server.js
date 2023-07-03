@@ -6,7 +6,7 @@ import { createPaymentSession } from './paymentSession';
  * @description Create a payment session
  *
  */
-export async function POST({ request, params }) {
+export async function POST({ request }) {
 	const uuid = crypto.randomUUID();
 	const product = await getProductDetails(request);
 	const response = await createPaymentSession(uuid, product);

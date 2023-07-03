@@ -1,3 +1,8 @@
+<script>
+	export let data;
+	console.log('🚀 ~ file: +page.svelte:3 ~ data:', data);
+</script>
+
 <div class="bg-gray-50 h-screen">
 	<div class="mx-auto max-w-2xl pt-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 		<div class="space-y-2 px-4 sm:flex sm:items-baseline sm:justify-between sm:space-y-0 sm:px-0">
