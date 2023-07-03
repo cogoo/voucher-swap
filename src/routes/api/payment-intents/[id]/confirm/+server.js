@@ -7,7 +7,7 @@ import { Keypair } from '@solana/web3.js';
  *
  */
 export async function POST({ request, params }) {
-	const payload = await json(request.body);
+	const payload = await request.json();
 	console.log('🚀 ~ file: +server.js:11 ~ POST ~ payload:', payload);
 
 	// issue voucher
