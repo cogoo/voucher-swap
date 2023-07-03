@@ -3,25 +3,34 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	let selected;
+	let selected = {
+		productId: null,
+		productPrice: 0,
+		productFullName: null,
+		salePrice: 0,
+		basePrice: 0
+	};
+
 	let voucherDropdown = '';
 	let price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(0);
 	let qrCodeElement;
 
-	$: if (selected) {
+	$: if (selected.productId) {
 		price = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(
 			(selected?.salePrice || selected?.basePrice || 0) / 100
 		);
 
-		const transferObject = createTransferRequest(
-			(selected?.salePrice || selected?.basePrice) / 100,
-			selected?.productFullName
-		);
+		selected.productPrice = selected?.salePrice || selected?.basePrice || 0;
 
-		const url = encodeURL(transferObject);
-		const qrCode = createQR(url, 300);
-		qrCodeElement.innerHTML = '';
-		qrCode.append(qrCodeElement);
+		// const transferObject = createTransferRequest(
+		// 	(selected?.salePrice || selected?.basePrice) / 100,
+		// 	selected?.productFullName
+		// );
+
+		// const url = encodeURL(transferObject);
+		// const qrCode = createQR(url, 300);
+		// qrCodeElement.innerHTML = '';
+		// qrCode.append(qrCodeElement);
 	}
 </script>
 
@@ -209,12 +218,17 @@
 								</li>
 							</ul> -->
 						</div>
-						<!-- <a
-							href="#"
-							aria-describedby="tier-hobby"
-							class="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-							>Buy Now</a
-						> -->
+						<form method="POST" action="/api/payment-intents">
+							<input type="hidden" name="productId" bind:value={selected.productId} />
+							<input type="hidden" name="productFullName" bind:value={selected.productFullName} />
+							<input type="hidden" name="productPrice" bind:value={selected.productPrice} />
+							<button
+								type="submit"
+								aria-describedby="tier-hobby"
+								class="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+								>Buy Now
+							</button>
+						</form>
 					</div>
 				</div>
 			</div>
