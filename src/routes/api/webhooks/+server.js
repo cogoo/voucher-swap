@@ -24,7 +24,7 @@ export async function POST({ request, params, locals, fetch }) {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: paymentData
+		body: JSON.stringify(paymentData)
 	});
 
 	return json({ uuid });
