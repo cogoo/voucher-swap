@@ -18,7 +18,7 @@ const candyPayClient = new CandyPay({
  */
 export async function createPaymentSession(uuid, product) {
 	return candyPayClient.session.create({
-		success_url: `${STATIC_URL}/success/${uuid}`,
+		success_url: `${STATIC_URL}/${uuid}`,
 		cancel_url: `${STATIC_URL}`,
 		tokens: ['usdt'],
 		items: [

@@ -39,6 +39,7 @@
 		"@candypay/checkout-sdk": "^0.1.57",
 		"@solana/pay": "^0.2.5",
 		"@solana/web3.js": "^1.77.3",
+		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"bignumber.js": "^9.1.1"
 	}
 }

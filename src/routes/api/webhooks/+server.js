@@ -8,13 +8,9 @@ export async function POST({ request, params }) {
 	// data is an array
 	console.log('data', data);
 
-	// loop through data.0.accountData to find reference key
-
 	// use the reference key to find the account in the database
 
-	// validate the transfer and update the transaction record
-
-	// confirm payment intent
+	// confirm payment intent /api/payment-intents/{paymentIntentId}/confirm
 
 	return json({ data });
 }
