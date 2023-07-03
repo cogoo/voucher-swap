@@ -13,6 +13,10 @@ export async function POST({ request, params, locals, fetch }) {
 		.insert([{ id: uuid, payment_metadata: paymentData }]);
 
 	// check for error
+	if (error) {
+		console.error(error);
+		throw error;
+	}
 
 	// confirm payment intent /api/payment-intents/{paymentIntentId}/confirm
 	fetch(`/api/payment-intents/${uuid}/confirm`, {

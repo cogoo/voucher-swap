@@ -6,11 +6,19 @@ import { Keypair } from '@solana/web3.js';
  * @description Confirm a payment intent
  *
  */
-export async function POST({ request, params }) {
+export async function POST({ request, fetch }) {
 	const payload = await request.json();
 	console.log('🚀 ~ file: +server.js:11 ~ POST ~ payload:', payload);
 
 	// issue voucher
+
+	// const response = await fetch('/api/orders', {
+	// 	method: 'POST',
+	// 	headers: {
+	// 		'Content-Type': 'application/json'
+	// 	},
+	// 	body: JSON.stringify(payload)
+	// });
 
 	// update payment intent
 
