@@ -31,13 +31,14 @@ export async function POST({ request, fetch, locals, params }) {
 		})
 	});
 
-	console.log('response', response);
+	const voucherMetadata = await response.json();
+	console.log('🚀 ~ file: +server.js:35 ~ POST ~ voucherMetadata:', voucherMetadata);
 
 	// update payment intent
 	const supabase = locals.supabase;
 	const { data, error } = await supabase
 		.from('payment_intents')
-		.update({ voucher_metadata: response })
+		.update({ voucher_metadata: voucherMetadata })
 		.eq('id', payload.metadata.uuid)
 		.select();
 
