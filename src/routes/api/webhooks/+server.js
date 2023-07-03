@@ -1,16 +1,23 @@
-import { json } from '@sveltejs/kit';
-
 /** @type {import('./$types').RequestHandler} */
-export async function POST({ request, params }) {
-	const data = await request.json();
-	console.log('params', params);
+export async function POST({ request, params, locals, fetch }) {
+	const paymentData = await request.json();
 
-	// data is an array
-	console.log('data', data);
+	const supabase = locals.supabase;
+	const uuid = paymentData.metadata.uuid;
 
-	// use the reference key to find the account in the database
+	// save payment intent
+	const { error } = await supabase
+		.from('payment_intents')
+		.insert([{ id: uuid, payment_metadata: paymentData }]);
+
+	// check for error
 
 	// confirm payment intent /api/payment-intents/{paymentIntentId}/confirm
-
-	return json({ data });
+	fetch(`/api/payment-intents/${uuid}/confirm`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: paymentData
+	});
 }

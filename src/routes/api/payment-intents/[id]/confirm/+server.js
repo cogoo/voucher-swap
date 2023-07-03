@@ -7,13 +7,12 @@ import { Keypair } from '@solana/web3.js';
  *
  */
 export async function POST({ request, params }) {
-	// fetch payment intent from database
+	const payload = await json(request);
+	console.log('🚀 ~ file: +server.js:11 ~ POST ~ payload:', payload);
 
-	// update/confirm payment intent
+	// issue voucher
 
-	// return payment intent
-
-	// make
+	// update payment intent
 
 	// send email?
 	return json({});
